@@ -83,30 +83,23 @@
     margin:0 0 30px;
   }
 
-  /* controls */
+  /* controls — simplified to just search */
   .controls{
     background:rgba(255,255,255,0.1);
     border:1px solid rgba(255,255,255,0.22);
     backdrop-filter:blur(10px);
-    border-radius:20px;
-    padding:18px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-    align-items:center;
+    border-radius:18px;
+    padding:8px;
   }
-  .search-wrap{
-    flex:1 1 320px;
-    position:relative;
-  }
+  .search-wrap{ position:relative; }
   .search-wrap svg{
     position:absolute; left:16px; top:50%; transform:translateY(-50%);
     width:18px; height:18px; opacity:0.55;
   }
   #search{
     width:100%;
-    padding:13px 16px 13px 44px;
-    border-radius:14px;
+    padding:14px 16px 14px 44px;
+    border-radius:12px;
     border:none;
     font-family:'Manrope',sans-serif;
     font-size:15px;
@@ -119,46 +112,13 @@
   #search:focus{ box-shadow: inset 0 0 0 2px var(--teal); }
   #search::placeholder{ color:#7A93A0; }
 
-  .halal-toggle{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:rgba(255,255,255,0.12);
-    padding:10px 16px;
-    border-radius:14px;
-    cursor:pointer;
-    user-select:none;
-    font-weight:700;
-    font-size:14.5px;
-    color:#fff;
-    border:1px solid rgba(255,255,255,0.25);
-  }
-  .switch{
-    width:40px; height:22px; border-radius:99px; background:rgba(255,255,255,0.35);
-    position:relative; flex:none; transition:background .18s ease;
-  }
-  .switch::after{
-    content:''; position:absolute; top:3px; left:3px; width:16px; height:16px; border-radius:50%;
-    background:#fff; transition:left .18s ease;
-  }
-  .halal-toggle input{ display:none; }
-  .halal-toggle input:checked + .switch{ background:var(--coral); }
-  .halal-toggle input:checked + .switch::after{ left:21px; }
-
-  .result-count{
-    font-size:13.5px;
-    color:rgba(255,255,255,0.75);
-    padding:0 4px;
-    width:100%;
-  }
-
   /* wave divider */
   .wave{
     position:absolute; left:0; right:0; bottom:-2px; line-height:0; z-index:1;
   }
   .wave svg{ width:100%; height:70px; display:block; }
 
-  /* ---------- NAV CHIPS ---------- */
+  /* ---------- FILTER CHIPS (cuisine + halal, single row) ---------- */
   .cuisine-nav{
     max-width:1100px;
     margin:-46px auto 0;
@@ -192,9 +152,129 @@
   }
   .chip:hover{ background:rgba(26,167,160,0.12); }
   .chip.active{ background:var(--teal); color:#fff; border-color:var(--teal); }
+  .chip.halal-chip.active{ background:var(--coral); border-color:var(--coral); }
+  .chip-divider{ flex:none; width:1px; background:var(--line); margin:2px 2px; }
+
+  /* ---------- SPIN THE WHEEL ---------- */
+  .wheel-section{ max-width:1100px; margin:44px auto 0; padding:0 24px; }
+  .wheel-card{
+    background:linear-gradient(180deg,#fff, var(--foam));
+    border:1px solid var(--line);
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    padding:32px 24px;
+    text-align:center;
+    position:relative;
+  }
+  .wheel-card h3{
+    font-family:'Baloo 2', sans-serif;
+    font-size:24px;
+    margin:0 0 4px;
+    color:var(--deep);
+  }
+  .wheel-card p.sub{
+    margin:0 0 24px;
+    color:#6C8695;
+    font-size:14.5px;
+  }
+  .wheel-stage{
+    position:relative;
+    width:260px;
+    height:260px;
+    margin:0 auto 22px;
+  }
+  .wheel-pointer{
+    position:absolute;
+    top:-6px; left:50%;
+    transform:translateX(-50%);
+    width:0; height:0;
+    border-left:13px solid transparent;
+    border-right:13px solid transparent;
+    border-top:24px solid var(--deep);
+    z-index:6;
+    filter:drop-shadow(0 3px 4px rgba(0,0,0,0.25));
+  }
+  .wheel-disc{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    position:relative;
+    box-shadow:0 0 0 8px #fff, 0 0 0 10px var(--line), 0 10px 26px rgba(5,42,68,0.3);
+    transition:transform 4.2s cubic-bezier(0.15,0.68,0.1,1);
+    overflow:hidden;
+  }
+  .seg-label{
+    position:absolute;
+    top:50%; left:50%;
+    width:112px;
+    height:16px;
+    margin-top:-8px;
+    transform-origin:0% 50%;
+    font-size:10.5px;
+    font-weight:800;
+    color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,0.35);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    pointer-events:none;
+    padding-left:26px;
+  }
+  .wheel-hub{
+    position:absolute;
+    top:50%; left:50%;
+    width:54px; height:54px;
+    margin:-27px 0 0 -27px;
+    border-radius:50%;
+    background:var(--deep);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    z-index:5;
+  }
+  #spinBtn{
+    font-family:'Baloo 2', sans-serif;
+    font-size:16px;
+    font-weight:700;
+    padding:13px 30px;
+    border-radius:14px;
+    border:none;
+    background:var(--coral);
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 8px 20px -8px rgba(255,127,92,0.7);
+    transition:transform .12s ease, background .15s ease;
+  }
+  #spinBtn:hover{ background:#ff6a41; transform:translateY(-1px); }
+  #spinBtn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+  #spinBtn:active:not(:disabled){ transform:translateY(1px); }
+
+  .wheel-result{
+    margin-top:22px;
+    display:none;
+  }
+  .wheel-result.show{ display:block; }
+  .wheel-result .pick-label{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:13.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--coral);
+    margin-bottom:10px;
+  }
+  .wheel-result .card{ max-width:340px; margin:0 auto; text-align:left; }
 
   /* ---------- MAIN ---------- */
   main{ max-width:1100px; margin:0 auto; padding:50px 24px 30px; }
+
+  .result-count{
+    font-size:13px;
+    color:#6C8695;
+    margin-bottom:18px;
+  }
 
   .section{ margin-bottom:52px; scroll-margin-top:90px; }
   .section-head{
@@ -342,8 +422,7 @@
   footer strong{ color:#fff; }
 
   @media (max-width:600px){
-    .controls{ flex-direction:column; align-items:stretch; }
-    .halal-toggle{ justify-content:space-between; }
+    .wheel-stage{ width:220px; height:220px; }
   }
 </style>
 </head>
@@ -363,19 +442,13 @@
     </div>
 
     <h2>Yishun's food directory, dolphin&#8209;guided.</h2>
-    <p class="lede">Every stall, its unit number, and its cuisine — all in one pod. Search by name, filter for halal, and dive straight to the menu or reserve a table.</p>
+    <p class="lede">Every stall, its unit number, and its cuisine — search, or let the wheel decide when you can't.</p>
 
     <div class="controls">
       <div class="search-wrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="#0C5D82" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input type="text" id="search" placeholder="Search outlet, cuisine, or unit number…">
       </div>
-      <label class="halal-toggle">
-        Halal only
-        <input type="checkbox" id="halalFilter">
-        <span class="switch"></span>
-      </label>
-      <div class="result-count" id="resultCount"></div>
     </div>
   </div>
 
@@ -388,11 +461,32 @@
 
 <nav class="cuisine-nav">
   <div class="chip-row" id="chipRow">
-    <button class="chip active" data-target="all">All Cuisines</button>
+    <button class="chip active" data-type="all">All Cuisines</button>
+    <button class="chip halal-chip" data-type="halal">🐬 Halal Only</button>
+    <span class="chip-divider"></span>
   </div>
 </nav>
 
+<section class="wheel-section">
+  <div class="wheel-card">
+    <h3>Can't decide what to eat?</h3>
+    <p class="sub">Spin the wheel — it picks from whatever's currently showing below.</p>
+    <div class="wheel-stage">
+      <div class="wheel-pointer"></div>
+      <div class="wheel-disc" id="wheelDisc">
+        <div class="wheel-hub">🐬</div>
+      </div>
+    </div>
+    <button id="spinBtn">🎡 Spin the Wheel</button>
+    <div class="wheel-result" id="wheelResult">
+      <p class="pick-label">🐬 Tonight's pick</p>
+      <div id="wheelResultCard"></div>
+    </div>
+  </div>
+</section>
+
 <main>
+  <div class="result-count" id="resultCount"></div>
   <div id="sections"></div>
   <div class="empty-state" id="emptyState">
     <svg viewBox="0 0 64 64" fill="none" stroke="#6C8695" stroke-width="2"><circle cx="28" cy="28" r="16"/><path d="M39 39L52 52"/></svg>
@@ -414,9 +508,7 @@
 
 <script>
 // ---------- DATA ----------
-// wing: "North" or "South", reserve: true if sit-down/reservation-friendly, halal: true/false/null(unverified)
 const DATA = [
-  // Chinese
   {name:"Din Tai Fung", stall:"#B1-107/108", wing:"South", cuisine:"Chinese", halal:false, reserve:true, site:"https://www.dintaifung.com.sg"},
   {name:"PUTIEN", stall:"#02-01/02", wing:"North", cuisine:"Chinese", halal:false, reserve:true, site:"https://www.putien.com"},
   {name:"Dian Xiao Er", stall:"#02-06", wing:"North", cuisine:"Chinese", halal:false, reserve:true, site:"https://www.dianxiaoer.com"},
@@ -429,45 +521,37 @@ const DATA = [
   {name:"Qian Wei Shan Dong Da Bao", stall:"#B2-118", wing:"South", cuisine:"Chinese", halal:false, reserve:false},
   {name:"Nosignboard Sheng Jian", stall:"#B1", wing:"North", cuisine:"Chinese", halal:false, reserve:false},
 
-  // Hotpot & BBQ
   {name:"Hai Di Lao Hot Pot", stall:"#B1-179/180/191/192/193", wing:"South", cuisine:"Hotpot & BBQ", halal:false, reserve:true, site:"https://www.haidilao.com.sg"},
   {name:"Seoul Garden", stall:"#B1", wing:"North", cuisine:"Hotpot & BBQ", halal:false, reserve:true, site:"https://www.seoulgarden.com.sg"},
   {name:"Tori-Q", stall:"#B1-185", wing:"South", cuisine:"Hotpot & BBQ", halal:false, reserve:false},
   {name:"Express Teppan-yaki", stall:"#B1-200", wing:"South", cuisine:"Hotpot & BBQ", halal:false, reserve:false},
 
-  // Japanese
   {name:"Gyoza-Ya", stall:"#B1-199", wing:"South", cuisine:"Japanese", halal:false, reserve:false},
   {name:"Kanshoku Ramen Bar", stall:"#B1-151", wing:"South", cuisine:"Japanese", halal:false, reserve:false},
   {name:"Maki-San", stall:"#01-172", wing:"South", cuisine:"Japanese", halal:false, reserve:false},
   {name:"Sushi Express", stall:"#B1-150", wing:"South", cuisine:"Japanese", halal:false, reserve:false},
 
-  // Korean
   {name:"PatBingSoo Korean Dining House", stall:"#B1-181", wing:"South", cuisine:"Korean", halal:false, reserve:true},
   {name:"Pizza Maru", stall:"#B1-192/193", wing:"South", cuisine:"Korean", halal:false, reserve:false},
   {name:"Seoul Jjimdak", stall:"#B1-179", wing:"South", cuisine:"Korean", halal:false, reserve:false},
   {name:"Bonchon", stall:"#B1-180", wing:"South", cuisine:"Korean", halal:false, reserve:false, site:"https://www.bonchon.com.sg"},
 
-  // Thai
   {name:"Sakon Thai", stall:"#01-129", wing:"South", cuisine:"Thai", halal:false, reserve:false},
   {name:"Khun Thai", stall:"#B2-144", wing:"South", cuisine:"Thai", halal:false, reserve:false},
 
-  // Turkish & Middle Eastern
   {name:"Turkish Kebab Corner", stall:"#B2-125", wing:"South", cuisine:"Turkish & Middle Eastern", halal:true, reserve:false},
   {name:"Sultan Turkish Corner", stall:"#B2-125", wing:"South", cuisine:"Turkish & Middle Eastern", halal:true, reserve:false},
 
-  // Halal Malay / Indonesian
   {name:"Gado & Grill", stall:"#B1-198", wing:"South", cuisine:"Malay & Indonesian", halal:true, reserve:false},
   {name:"Ayam Penyet President", stall:"#B1", wing:"North", cuisine:"Malay & Indonesian", halal:true, reserve:false},
   {name:"Malaysia Chiak", stall:"#B1-194/195, #B1-203-205", wing:"South", cuisine:"Malay & Indonesian", halal:false, reserve:false},
 
-  // Fast food & Fried Chicken
   {name:"4Fingers Crispy Chicken", stall:"#01", wing:"North", cuisine:"Fast Food", halal:true, reserve:false, site:"https://www.4fingers.com.sg"},
   {name:"Arnold's Fried Chicken", stall:"#01-20 (Transport Hub)", wing:"North", cuisine:"Fast Food", halal:false, reserve:false},
   {name:"Guzman Y Gomez", stall:"#01-176/177/178", wing:"South", cuisine:"Fast Food", halal:false, reserve:false, site:"https://www.guzmanygomez.com.sg"},
   {name:"Eighteen Chefs Signature", stall:"#02-128/129", wing:"South", cuisine:"Fast Food", halal:false, reserve:false},
   {name:"Heavenly Wang", stall:"#01-167", wing:"South", cuisine:"Fast Food", halal:false, reserve:false},
 
-  // Western
   {name:"The Manhattan Fish Market", stall:"#02-07/08", wing:"North", cuisine:"Western", halal:false, reserve:false, site:"https://www.manhattanfishmarket.com"},
   {name:"Collin's", stall:"#01-113/114", wing:"South", cuisine:"Western", halal:false, reserve:false, site:"https://www.collins.sg"},
   {name:"Big Fish Small Fish", stall:"#02-132/133", wing:"South", cuisine:"Western", halal:false, reserve:false},
@@ -478,10 +562,8 @@ const DATA = [
   {name:"Pezzo", stall:"#B2-152", wing:"South", cuisine:"Western", halal:false, reserve:false, site:"https://www.pezzo.com.sg"},
   {name:"Pizza Hut Express", stall:"#B2-149", wing:"South", cuisine:"Western", halal:false, reserve:false},
 
-  // Vietnamese
   {name:"So Pho", stall:"#B1-182/183", wing:"South", cuisine:"Vietnamese", halal:false, reserve:false},
 
-  // Cafes & Bakery
   {name:"Joe & Dough", stall:"#01-118/119", wing:"South", cuisine:"Cafés & Bakery", halal:false, reserve:false, site:"https://www.joenndough.com"},
   {name:"The Coffee Bean & Tea Leaf", stall:"#01-110", wing:"South", cuisine:"Cafés & Bakery", halal:false, reserve:false, site:"https://www.coffeebean.com.sg"},
   {name:"O'Coffee Club Xpress", stall:"#01-126", wing:"South", cuisine:"Cafés & Bakery", halal:false, reserve:false},
@@ -493,9 +575,18 @@ const DATA = [
   {name:"Krispy Kreme", stall:"#01-133", wing:"South", cuisine:"Cafés & Bakery", halal:false, reserve:false, site:"https://www.krispykreme.com.sg"},
   {name:"LE Castella", stall:"#01-151", wing:"South", cuisine:"Cafés & Bakery", halal:false, reserve:false},
   {name:"Ho Kee Pau", stall:"#B2-145", wing:"South", cuisine:"Cafés & Bakery", halal:false, reserve:false},
-  {name:"Bengawan Solo", stall:"#B2-162", wing:"South", cuisine:"Cafés & Bakery", halal:true, reserve:false},
+  {name:"Bengawan Solo", stall:"#B1-19", wing:"North", cuisine:"Cafés & Bakery", halal:true, reserve:false},
 
-  // Desserts & Drinks
+  {name:"PlayMade by 丸作", stall:"#01-154", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.playmade.com/"},
+  {name:"KOI Thé Express", stall:"#B2-157", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.koithe.com/"},
+  {name:"BeuTea", stall:"#01-127", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.instagram.com/beutea.sg/"},
+  {name:"ChaPanda 茶百道", stall:"#B2-162", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.chabaidao.com/"},
+  {name:"CHICHA San Chen 吃茶三千", stall:"#B2-01", wing:"North", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.chichasanchen.com.sg/"},
+  {name:"Sharetea Premium", stall:"#B1-12", wing:"North", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.facebook.com/ShareteaSG"},
+  {name:"Nine Fresh 九鲜", stall:"#B2-153", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://ninefresh.com/"},
+  {name:"Wanpo Tea Shop", stall:"#B2-123", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.instagram.com/wanpotea_sg/"},
+  {name:"iTea", stall:"#B2-119", wing:"South", cuisine:"Bubble Tea", halal:false, reserve:false, site:"https://www.itea.sg/"},
+
   {name:"Mei Heong Yuen Dessert", stall:"#02-171", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"Hong Kong Sheng Kee Dessert", stall:"#B1-155", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"BlackBall", stall:"#B1-154", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
@@ -505,124 +596,231 @@ const DATA = [
   {name:"Smooy", stall:"#B2-124", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"HoneyWorld", stall:"#B2-129", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"Xin Bei Healthy Papaya Milkshake", stall:"#B2-157", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
-  {name:"iTea", stall:"#B2-119", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"PARTEA", stall:"#01-153", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"Teafolio", stall:"#01-154", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"Auntie Anne's", stall:"#01", wing:"North", cuisine:"Desserts & Drinks", halal:true, reserve:false, site:"https://www.auntieannes.com.sg"},
   {name:"Baskin Robbins", stall:"#02-114", wing:"South", cuisine:"Desserts & Drinks", halal:false, reserve:false},
   {name:"Bee Cheng Hiang", stall:"#02-155", wing:"South", cuisine:"Desserts & Drinks", halal:true, reserve:false},
 
-  // Food Courts
   {name:"Kopitiam Food Court", stall:"North Wing #B2", wing:"North", cuisine:"Food Court", halal:false, reserve:false},
   {name:"Bagus Food Court", stall:"South Wing Level 2", wing:"South", cuisine:"Food Court", halal:false, reserve:false},
   {name:"Malaysia Boleh", stall:"South Wing #B1", wing:"South", cuisine:"Food Court", halal:false, reserve:false},
   {name:"Cantine (Halal Food Court)", stall:"South Wing Level 2", wing:"South", cuisine:"Food Court", halal:true, reserve:false},
 ];
 
-// ---------- RENDER ----------
+// ---------- STATE ----------
+const cuisines = [...new Set(DATA.map(d => d.cuisine))];
+let selectedCuisine = 'all';
+let halalOnly = false;
+
+// ---------- DOM ----------
 const sectionsEl = document.getElementById('sections');
 const chipRow = document.getElementById('chipRow');
 const searchInput = document.getElementById('search');
-const halalFilter = document.getElementById('halalFilter');
 const resultCount = document.getElementById('resultCount');
 const emptyState = document.getElementById('emptyState');
+const wheelDisc = document.getElementById('wheelDisc');
+const spinBtn = document.getElementById('spinBtn');
+const wheelResult = document.getElementById('wheelResult');
+const wheelResultCard = document.getElementById('wheelResultCard');
 
-const cuisines = [...new Set(DATA.map(d => d.cuisine))];
-
-// build chips
+// build cuisine chips
 cuisines.forEach(c => {
   const chip = document.createElement('button');
   chip.className = 'chip';
   chip.textContent = c;
-  chip.dataset.target = c;
+  chip.dataset.type = 'cuisine';
+  chip.dataset.value = c;
   chipRow.appendChild(chip);
 });
+
 chipRow.addEventListener('click', e => {
   const btn = e.target.closest('.chip');
   if(!btn) return;
-  [...chipRow.children].forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
-  if(btn.dataset.target === 'all'){
-    render();
-  } else {
-    render();
-    const el = document.getElementById('sec-' + slug(btn.dataset.target));
-    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  const type = btn.dataset.type;
+
+  if(type === 'all'){
+    selectedCuisine = 'all';
+    chipRow.querySelectorAll('.chip[data-type="cuisine"], .chip[data-type="all"]').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+  } else if(type === 'halal'){
+    halalOnly = !halalOnly;
+    btn.classList.toggle('active', halalOnly);
+  } else if(type === 'cuisine'){
+    const val = btn.dataset.value;
+    selectedCuisine = (selectedCuisine === val) ? 'all' : val;
+    chipRow.querySelectorAll('.chip[data-type="cuisine"], .chip[data-type="all"]').forEach(c => c.classList.remove('active'));
+    if(selectedCuisine === 'all'){
+      chipRow.querySelector('.chip[data-type="all"]').classList.add('active');
+    } else {
+      btn.classList.add('active');
+    }
   }
+  render();
+  buildWheel();
 });
 
 function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-'); }
 
 function iconWebsite(){
-  return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg>`;
+  return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg>';
 }
 
 function cardHTML(d){
-  const halalBadge = d.halal ? `<span class="badge halal">🐬 Halal</span>` : '';
-  const reserveBadge = d.reserve ? `<span class="badge reserve">📞 Reservations</span>` : '';
+  const halalBadge = d.halal ? '<span class="badge halal">🐬 Halal</span>' : '';
+  const reserveBadge = d.reserve ? '<span class="badge reserve">📞 Reservations</span>' : '';
   const websiteBtn = d.site
-    ? `<a class="btn primary" href="${d.site}" target="_blank" rel="noopener">${iconWebsite()} Menu / Site</a>`
-    : `<span class="btn disabled">No website listed</span>`;
+    ? '<a class="btn primary" href="' + d.site + '" target="_blank" rel="noopener">' + iconWebsite() + ' Menu / Site</a>'
+    : '<span class="btn disabled">No website listed</span>';
   const reserveBtn = d.reserve
-    ? `<span class="btn" title="Call the outlet and quote this unit number">Quote: ${d.stall}</span>`
+    ? '<span class="btn" title="Call the outlet and quote this unit number">Quote: ' + d.stall + '</span>'
     : '';
 
-  return `
-  <div class="card" data-name="${d.name.toLowerCase()}" data-cuisine="${d.cuisine}" data-halal="${d.halal}">
-    <div class="card-top">
-      <h4>${d.name}</h4>
-      <span class="stall-badge">${d.stall}</span>
-    </div>
-    <div class="wing">${d.wing} Wing</div>
-    <div class="badges">${halalBadge}${reserveBadge}</div>
-    <div class="card-actions">${websiteBtn}${reserveBtn}</div>
-  </div>`;
+  return '<div class="card" data-name="' + d.name.toLowerCase() + '" data-cuisine="' + d.cuisine + '" data-halal="' + d.halal + '">' +
+    '<div class="card-top"><h4>' + d.name + '</h4><span class="stall-badge">' + d.stall + '</span></div>' +
+    '<div class="wing">' + d.wing + ' Wing</div>' +
+    '<div class="badges">' + halalBadge + reserveBadge + '</div>' +
+    '<div class="card-actions">' + websiteBtn + reserveBtn + '</div>' +
+  '</div>';
+}
+
+// returns the outlets matching current search + chip filters
+function getFilteredData(){
+  const q = searchInput.value.trim().toLowerCase();
+  let items = DATA;
+  if(selectedCuisine !== 'all') items = items.filter(d => d.cuisine === selectedCuisine);
+  if(halalOnly) items = items.filter(d => d.halal);
+  if(q){
+    items = items.filter(d =>
+      d.name.toLowerCase().includes(q) ||
+      d.cuisine.toLowerCase().includes(q) ||
+      d.stall.toLowerCase().includes(q)
+    );
+  }
+  return items;
 }
 
 function render(){
-  const q = searchInput.value.trim().toLowerCase();
-  const halalOnly = halalFilter.checked;
-
+  const filtered = getFilteredData();
   sectionsEl.innerHTML = '';
-  let totalShown = 0;
 
-  cuisines.forEach(cuisine => {
-    let items = DATA.filter(d => d.cuisine === cuisine);
-    if(halalOnly) items = items.filter(d => d.halal);
-    if(q){
-      items = items.filter(d =>
-        d.name.toLowerCase().includes(q) ||
-        d.cuisine.toLowerCase().includes(q) ||
-        d.stall.toLowerCase().includes(q)
-      );
-    }
+  const cuisinesToShow = selectedCuisine !== 'all' ? [selectedCuisine] : cuisines;
+
+  cuisinesToShow.forEach(cuisine => {
+    const items = filtered.filter(d => d.cuisine === cuisine);
     if(items.length === 0) return;
 
-    totalShown += items.length;
     const sec = document.createElement('section');
     sec.className = 'section';
     sec.id = 'sec-' + slug(cuisine);
-    sec.innerHTML = `
-      <div class="section-head">
-        <h3>${cuisine}</h3>
-        <span class="count">${items.length} outlet${items.length>1?'s':''}</span>
-      </div>
-      <div class="grid">${items.map(cardHTML).join('')}</div>
-    `;
+    sec.innerHTML =
+      '<div class="section-head"><h3>' + cuisine + '</h3><span class="count">' + items.length + ' outlet' + (items.length>1?'s':'') + '</span></div>' +
+      '<div class="grid">' + items.map(cardHTML).join('') + '</div>';
     sectionsEl.appendChild(sec);
   });
 
-  resultCount.textContent = totalShown === DATA.length
-    ? `Showing all ${DATA.length} outlets`
-    : `Showing ${totalShown} of ${DATA.length} outlets`;
+  resultCount.textContent = filtered.length === DATA.length
+    ? 'Showing all ' + DATA.length + ' outlets'
+    : 'Showing ' + filtered.length + ' of ' + DATA.length + ' outlets';
 
-  emptyState.classList.toggle('show', totalShown === 0);
+  emptyState.classList.toggle('show', filtered.length === 0);
 }
 
-searchInput.addEventListener('input', render);
-halalFilter.addEventListener('change', render);
+// ---------- SPIN THE WHEEL ----------
+const WHEEL_COLORS = ['#0C5D82','#1AA7A0','#052A44','#FF7F5C','#2E86AB','#17A398','#4FD8C9','#0E7A8C','#F2A65A','#0A4B6E','#22B8A0','#F4845F','#134B5F'];
+let currentRotation = 0;
+let wheelItems = [];   // the labels currently on the wheel
+let wheelMode = 'cuisine'; // 'cuisine' or 'outlet'
+let spinning = false;
+
+function buildWheel(){
+  const filtered = getFilteredData();
+  if(filtered.length === 0){
+    wheelItems = [];
+    wheelDisc.style.background = '#B9C9D0';
+    wheelDisc.querySelectorAll('.seg-label').forEach(el => el.remove());
+    spinBtn.disabled = true;
+    return;
+  }
+  spinBtn.disabled = false;
+
+  const filteredCuisines = [...new Set(filtered.map(d => d.cuisine))];
+
+  if(filtered.length <= 12){
+    wheelMode = 'outlet';
+    wheelItems = filtered.map(d => d.name);
+  } else {
+    wheelMode = 'cuisine';
+    wheelItems = filteredCuisines;
+  }
+
+  const n = wheelItems.length;
+  const seg = 360 / n;
+
+  // conic-gradient background
+  let stops = [];
+  for(let i=0;i<n;i++){
+    const color = WHEEL_COLORS[i % WHEEL_COLORS.length];
+    stops.push(color + ' ' + (i*seg) + 'deg ' + ((i+1)*seg) + 'deg');
+  }
+  wheelDisc.style.background = 'conic-gradient(' + stops.join(',') + ')';
+
+  // labels
+  wheelDisc.querySelectorAll('.seg-label').forEach(el => el.remove());
+  wheelItems.forEach((label, i) => {
+    const center = i*seg + seg/2;
+    const el = document.createElement('div');
+    el.className = 'seg-label';
+    el.textContent = label;
+    el.style.transform = 'rotate(' + center + 'deg)';
+    wheelDisc.appendChild(el);
+  });
+}
+
+function pickOutletFromCuisine(cuisineName){
+  const filtered = getFilteredData().filter(d => d.cuisine === cuisineName);
+  return filtered[Math.floor(Math.random() * filtered.length)];
+}
+
+function pickOutletByName(name){
+  return getFilteredData().find(d => d.name === name);
+}
+
+function spin(){
+  if(spinning || wheelItems.length === 0) return;
+  spinning = true;
+  spinBtn.disabled = true;
+  wheelResult.classList.remove('show');
+
+  const n = wheelItems.length;
+  const seg = 360 / n;
+  const idx = Math.floor(Math.random() * n);
+  const center = idx*seg + seg/2;
+  const extraSpins = 5 + Math.floor(Math.random()*2); // 5-6 full spins
+  const baseRotation = currentRotation - (currentRotation % 360);
+  const newRotation = baseRotation + extraSpins*360 + (360 - center);
+
+  currentRotation = newRotation;
+  wheelDisc.style.transform = 'rotate(' + newRotation + 'deg)';
+
+  setTimeout(() => {
+    const winnerLabel = wheelItems[idx];
+    const outlet = wheelMode === 'cuisine' ? pickOutletFromCuisine(winnerLabel) : pickOutletByName(winnerLabel);
+    if(outlet){
+      wheelResultCard.innerHTML = cardHTML(outlet);
+      wheelResult.classList.add('show');
+      wheelResult.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+    spinning = false;
+    spinBtn.disabled = false;
+  }, 4300);
+}
+
+spinBtn.addEventListener('click', spin);
+searchInput.addEventListener('input', () => { render(); buildWheel(); });
 
 render();
+buildWheel();
 </script>
 </body>
 </html>
